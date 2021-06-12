@@ -31,21 +31,21 @@ public class RegisterActivity extends AppCompatActivity {
         openHelper = new DatabaseHelper(this);
 
         registerBtn = findViewById(R.id.btnRegLogin);
-        gotoLoginBtn = findViewById(R.id.btnGotoLogin);
+
         regName = findViewById(R.id.etRegName);
         regPhone = findViewById(R.id.etRegPhone);
         regGmail = findViewById(R.id.etRegGmail);
         regPassword = findViewById(R.id.etRegPassword);
         db = openHelper.getWritableDatabase();
-        String fname = regName.getText().toString().trim();
-        String fPhone = regPhone.getText().toString().trim();
-        String fGmail = regGmail.getText().toString().trim();
-        String fPassword = regPassword.getText().toString().trim();
+
 
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String fname = regName.getText().toString().trim();
+                String fPhone = regPhone.getText().toString().trim();
+                String fGmail = regGmail.getText().toString().trim();
+                String fPassword = regPassword.getText().toString().trim();
                 if (fname.isEmpty() || fPassword.isEmpty() || fGmail.isEmpty() || fPhone.isEmpty()) {
                     LayoutInflater inflater = getLayoutInflater();
                     View layout = inflater.inflate(R.layout.customtoastlayout, (ViewGroup) findViewById(R.id.custom_toast_container));
@@ -56,9 +56,19 @@ public class RegisterActivity extends AppCompatActivity {
                     toast.setDuration(Toast.LENGTH_LONG);
                     toast.setView(layout);
                     toast.show();
-                } else {
+
+                }else {
                     insertData(fname,fPhone,fGmail,fPassword);
-                    Toast.makeText(getApplicationContext(),"Registration Successful", Toast.LENGTH_SHORT).show();
+
+                    LayoutInflater inflater = getLayoutInflater();
+                    View layout = inflater.inflate(R.layout.customtoastlayout, (ViewGroup) findViewById(R.id.custom_toast_container));
+                    TextView text = (TextView) layout.findViewById(R.id.textCustom);
+                    text.setText("Congratulations, Your account has been successfully created ");
+                    Toast toast = new Toast(getApplicationContext());
+                    toast.setGravity(Gravity.BOTTOM, 0, 0);
+                    toast.setDuration(Toast.LENGTH_LONG);
+                    toast.setView(layout);
+                    toast.show();
 
                     Intent intent = new Intent(getApplicationContext(), login.class);
                     startActivity(intent);
